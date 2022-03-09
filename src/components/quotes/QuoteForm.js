@@ -1,10 +1,11 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
-import Card from '../ui/Card';
-import LoadingSpinner from '../ui/LoadingSpinner';
+import Card from '../UI/Card';
+import LoadingSpinner from '../UI/LoadingSpinner'
 import classes from './QuoteForm.module.css';
 
 const QuoteForm = (props) => {
+  const [isEntered, setIsEntered] = useState(false)
   const authorInputRef = useRef();
   const textInputRef = useRef();
 
@@ -19,9 +20,18 @@ const QuoteForm = (props) => {
     props.onAddQuote({ author: enteredAuthor, text: enteredText });
   }
 
+  const focusHandler = () => {
+    setIsEntered(true)
+  }
+
+  
+
+  
   return (
+    <>
     <Card>
-      <form className={classes.form} onSubmit={submitFormHandler}>
+      
+      <form onFocus={focusHandler} className={classes.form} onSubmit={submitFormHandler}>
         {props.isLoading && (
           <div className={classes.loading}>
             <LoadingSpinner />
@@ -41,6 +51,7 @@ const QuoteForm = (props) => {
         </div>
       </form>
     </Card>
+    </>
   );
 };
 
